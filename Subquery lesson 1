@@ -1,22 +1,13 @@
 /*
-
 SQL Course
-
 Subqueries Lesson 1 - Self-Contained Subqueries
- 
 A self-contained subquery is independent of the outer query
-
 It can be executed stand-alone.
-
 It is executed once and the result is used by the outer query.  (As a result,it is generally more efficient than a correlated subquery
-
 */
 /*
-
 This is a scalar subquery returning a single value to use in the WHERE <column> =
-
 List the patient stays with the highest tariff
-
 */
 SELECT
 	ps.PatientId
@@ -30,15 +21,10 @@ WHERE ps.Tariff = (
 FROM
 	PatientStay ps2
 		);
-
 /*
-
 List the patient stays in Surgical wards.  (These wards end with the word 'Surgery'.)
-
 This  subquery returns a one column list to use in the WHERE <column> IN (...)
-
 Note: You can list patients in all wards apart from surgical wards by using NOT IN
-
 */
 SELECT
 	ps.PatientId
@@ -55,11 +41,8 @@ FROM
 	dbo.PatientStay
 WHERE Ward LIKE '%Surgery'
 		);
-
 /*
-
 * This subqueries are based on a different table to the outer query
-
 */
 SELECT
 	h.Hospital
@@ -76,7 +59,6 @@ FROM
 WHERE ps.Ward = 'Ophthalmology'
 	AND ps.AdmittedDate = '2024-02-26'
 		);
-
 SELECT
 	*
 FROM
@@ -88,13 +70,9 @@ FROM
 	DimHospital h
 WHERE h.HospitalType = 'Teaching'
 		);
-
 /*
-
 This  subquery returns a table so use in the FROM ...
-
 Calculate budget hospital tariffs as 10% more than actuals
-
 */
 SELECT
 	hosp.Hospital
@@ -109,17 +87,11 @@ FROM
 		PatientStay ps
 	GROUP BY ps.Hospital
 	) hosp;
-
 /*
-
 This subquery returns a table so use in the FROM ...
-
-Calculate the total tariff of the 10 most expensive patients 
-
-i.e. those with the highest tariff 
-
+Calculate the total tariff of the 10 most expensive patients
+i.e. those with the highest tariff
 (Ignore the possible complication that there may be some ties.)
-
 */
 SELECT
 	SUM(Top10Patients.Tariff) AS Top10Tariff
@@ -133,11 +105,8 @@ FROM
 		PatientStay ps
 	ORDER BY ps.Tariff DESC
 	) Top10Patients;
-
 /*
-
 Aside: Another way to do first example (scalar subquery) uses SQL variables
-
 */
 DECLARE @MaxTariff AS INT = (
 		SELECT
@@ -145,10 +114,8 @@ DECLARE @MaxTariff AS INT = (
 FROM
 	PatientStay ps2
 		);
-
 SELECT
 	@MaxTariff;
-
 SELECT
 	*
 FROM
